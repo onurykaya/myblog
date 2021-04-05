@@ -1,14 +1,21 @@
 import '../styles/globals.css'
 import Header from '../components/Header'
+import { Auth0Provider } from '@auth0/auth0-react'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <div className="antialiased text-gray-700">
-      <Header />
-      <main className="mt-6 mb-20">
-        <Component {...pageProps} />
-      </main>
-    </div>
+    <Auth0Provider
+      domain="dev-ghwkqj4m.us.auth0.com"
+      clientId="Yx00xxLWleCfqE8YLyFe1J3v4LoC0Xli"
+      redirectUri={process.env.NEXT_PUBLIC_URL}
+    >
+      <div className="antialiased text-gray-700">
+        <Header />
+        <main className="mt-6 mb-20">
+          <Component {...pageProps} />
+        </main>
+      </div>
+    </Auth0Provider>
   )
 }
 
