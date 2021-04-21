@@ -10,3 +10,7 @@
         @apply max-w-4xl mx-auto
     }
 }
+
+html {
+    @apply bg-gray-200;
+}
