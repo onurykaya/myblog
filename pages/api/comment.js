@@ -1,14 +1,20 @@
 import { nanoid } from 'nanoid'
 import Redis from 'ioredis'
+import Boom from '@hapi/boom'
+
+function errorResponse(res, error) {
+  const { output } = error
+  return res.status(output.statusCode).json(output.payload)
+}
 
 export default async function handler(req, res) {
   /* Comment Create */
   if (req.method === 'POST') {
     const { text, userToken, url } = req.body
 
-    if (!url || !userToken || !text)
-      return res.status(400).json({ message: 'Parametreler hatalı olabilir' })
-
+    if (!url || !userToken || !text) {
+      return errorResponse(res, Boom.badData('Eksik parametre'))
+    }
     const userResponse = await fetch(
       `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/userinfo`,
       {
